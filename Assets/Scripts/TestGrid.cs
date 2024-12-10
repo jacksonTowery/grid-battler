@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ public class TestGrid : MonoBehaviour
 
     public void Update()
     {
-         if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)) & (BattleSystem.getState().Equals(BattleState.PLAYERTURN))
         {
            // Debug.Log("good");
           //  Console.Write("good");
