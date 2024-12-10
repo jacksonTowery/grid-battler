@@ -7,8 +7,8 @@ public class TestGrid : MonoBehaviour
 {
     // Start is called before the first frame update
     private PathFinding pathFinding;
-    [SerializeField] private CharacterPathfinding characterPathfinding;
-    public int range = 4;
+    //[SerializeField] private CharacterPathfinding characterPathfinding;
+    [SerializeField] private Character character;
     // [SerializeField] public Camera camera;
    // [SerializeField] public Component.camera camera;
     void Start()
@@ -16,7 +16,10 @@ public class TestGrid : MonoBehaviour
         //  Grid<bool> grid = new Grid<bool>(11, 11, 10f, new Vector3(20,0), ()=> new bool());
         pathFinding = new PathFinding(11, 11);
     }
-
+    public void changeCharacter(Character character)
+    {
+        this.character = character;
+    }
     public void Update()
     {
          if (Input.GetMouseButtonDown(0))
@@ -28,7 +31,7 @@ public class TestGrid : MonoBehaviour
             //mouseWorldPosition.z = 0f;
             //  Debug.Log(UtilsClass.GetMouseWorldPosition());
              pathFinding.getGrid().GetXY(mouseWorldPosition, out int xEnd, out int yEnd);
-             pathFinding.getGrid().GetXY(characterPathfinding.transform.position, out int xStart, out int yStart);
+             pathFinding.getGrid().GetXY(character.getPosition(), out int xStart, out int yStart);
 
             // List<PathNode> path = pathFinding.FindPath(0, 0, xEnd, yEnd); 
             List<PathNode> path = pathFinding.FindPath(xStart, yStart, xEnd, yEnd);
@@ -67,13 +70,13 @@ public class TestGrid : MonoBehaviour
                    }
                }*/
 
-            if (path.Count <= range)
+            if (path.Count <= character.getmRange())
             {
-                characterPathfinding.transform.position = pathFinding.getGrid().GetWorldPosition(xEnd, yEnd) + new Vector3(5, 5);
+                character.SetPosition(pathFinding.getGrid().GetWorldPosition(xEnd, yEnd) + new Vector3(5, 5));
             }
             else
             {
-                Debug.Log("Out of Range "+path.Count);
+                Debug.Log("Out of Range ");
             }
 
 
