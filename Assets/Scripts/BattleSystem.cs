@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public enum BattleState { START, PLAYER1TURN, PLAYER2TURN, WON, LOST }
+public enum BattleState { START, PLAYERTURN, WON, LOST } //declaring what a battleState enum can hold
 
 public class BattleSystem : MonoBehaviour
 {
-    public static BattleState state;
-
+    public static BattleState state; //current state of battle
+    public static int CurrentPlayer = 0; //set to 0 because no player assigned yet
     public BattleState getState()
     {
         return state;
@@ -22,13 +23,33 @@ public class BattleSystem : MonoBehaviour
 
     void SetupBattle()
     {
-        //useless right now, but frame work for when later we need to run multiple instantiations at setup
+        int player = Random.Range(1, 3); //SHOULD generate either 1 or 2
 
-        PlayerTurn();
+        if (player == 1) //send to player 1's turn
+        {
+            state = BattleState.PLAYERTURN;
+            Player1Turn();
+        }
+
+        else if(player == 2)
+        {
+            state = BattleState.PLAYERTURN;
+            Player2Turn(); //send to player 2's turn
+        }
+
+        else //error error, you done goofed up in your code if this reads out ever
+        {
+            Debug.Log("ERROR! CURRENTPLAYER != 1 OR 2");
+        }
     }
 
-    void PlayerTurn()
+    void Player1Turn()
     {
-        state = BattleState.PLAYER1TURN;
+        
+    }
+
+    void Player2Turn()
+    {
+
     }
 }

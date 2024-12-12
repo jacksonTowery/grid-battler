@@ -20,7 +20,7 @@ public class TestGrid : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetMouseButtonDown(0)) & (BattleSystem.getState().Equals(BattleState.PLAYERTURN))
+        if (Input.GetMouseButtonDown(0) & (BattleSystem.state.Equals(BattleState.PLAYERTURN)))
         {
            // Debug.Log("good");
           //  Console.Write("good");
