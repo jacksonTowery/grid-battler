@@ -42,6 +42,11 @@ public class Character: MonoBehaviour
     {
         transform.position = pos;
     }
+    public void takeDammage(int power)
+    {
+        health -= power*25 / def;
+    }
+
 
     /*private void OnMouseDown()
     {

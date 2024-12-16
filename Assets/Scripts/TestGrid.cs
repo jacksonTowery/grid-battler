@@ -18,7 +18,11 @@ public class TestGrid : MonoBehaviour
     [SerializeField] private Character characterF;
     //[SerializeField] private List<Character> characters;
     private Character character;
+    private Character targetedCharacter;
     private List<Character> characters;
+    bool attack;
+    bool move;
+    bool act;
     // [SerializeField] public Camera camera;
    // [SerializeField] public Component.camera camera;
     void Start()
@@ -33,12 +37,20 @@ public class TestGrid : MonoBehaviour
          characters.Add(characterE);
          characters.Add(characterF);
         changeCharacter(characterA);
+        changeTargetedCharacter(characterE);
     }
     public void changeCharacter(Character character)
     {
         if(characters.Contains(character))
         {
             this.character = character;
+        }
+    }
+    public void changeTargetedCharacter(Character tarCharacter)
+    {
+        if (characters.Contains(tarCharacter))
+        {
+            this.targetedCharacter = tarCharacter;
         }
     }
     public bool containsCharacter(Vector3 position)
@@ -76,10 +88,38 @@ public class TestGrid : MonoBehaviour
         return null;
 
     }
+    public void attackTrue()
+    {
+        attack = true;
+        move = false;
+        act = false;
+    }
+    public void moveTrue() 
+    {
+        attack=false;
+        move = true;
+        act = false;
+    }
+    public void actTrue() 
+    {
+        attack = false;
+        move = false;
+        act = true;
+    }
     public void Update()
     {
-         if (Input.GetMouseButtonDown(0))
+       /* if(Input.GetMouseButtonDown(1))
         {
+            Vector3 mouseWorldPosition = UtilsClass.GetMouseWorldPosition();
+            if (containsCharacter(mouseWorldPosition))
+            {
+                changeTargetedCharacter(GetCharacter(mouseWorldPosition));
+                Debug.Log("target");
+            }
+        }
+        else*/ if (Input.GetMouseButtonDown(0))
+        {
+            
            // Debug.Log("good");
           //  Console.Write("good");
             // Vector3 mouseWorldPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
@@ -90,7 +130,7 @@ public class TestGrid : MonoBehaviour
             {
                 changeCharacter(GetCharacter(mouseWorldPosition));
             }
-            else
+            else if(attack)
             {
                 pathFinding.getGrid().GetXY(mouseWorldPosition, out int xEnd, out int yEnd);
                 pathFinding.getGrid().GetXY(character.getPosition(), out int xStart, out int yStart);
