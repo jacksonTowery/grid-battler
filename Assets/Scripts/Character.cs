@@ -22,7 +22,34 @@ public class Character: MonoBehaviour
     {
         return mRange;
     }
-
+    public int getaRange() 
+    {
+        return aRange;
+    }
+    public int getAtk()
+    {
+        return atk;
+    }
+    public void setAtk(int a)
+    {
+        atk = a;
+    }
+    public void setDef(int d)
+    {
+        def = d;
+    }
+    public void setmRange(int m)
+    {
+        mRange = m;
+    }
+    public void setaRange(int m)
+    {
+        aRange = m;
+    }
+    public int getHealth()
+    {
+        return health;
+    }
     public bool getMoved()
     {
        return moved;
@@ -31,6 +58,18 @@ public class Character: MonoBehaviour
     public void Moved()
     {
         moved = true;
+    }
+    public void attack()
+    {
+        attacked = true;
+    }
+    public bool getAttack()
+    {
+        return attacked;
+    }
+    public bool getIsOwner()
+    {
+        return owner;
     }
 
     public Vector3 getPosition()
@@ -45,6 +84,24 @@ public class Character: MonoBehaviour
     public void takeDammage(int power)
     {
         health -= power*25 / def;
+        if(health <= 0)
+        {
+            defeated();
+        }
+    }
+    private void defeated()
+    {
+        Destroy(gameObject);
+    }
+    public void resetBools() 
+    {
+        attacked = false;
+        moved = false;
+        usedAbillity = false;
+    }
+    public void change()
+    {
+        owner = !owner;
     }
 
 
