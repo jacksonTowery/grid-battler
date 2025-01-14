@@ -17,6 +17,7 @@ public class Character: MonoBehaviour
     private bool usedAbillity = false;
     public bool isSelected;
     public bool owner;
+    public bool supporter=true;
 
     public int getmRange()
     {
@@ -67,6 +68,18 @@ public class Character: MonoBehaviour
     {
         return attacked;
     }
+    public bool getAct()
+    {
+        return usedAbillity;
+    }
+    public void acted()
+    {
+        usedAbillity = false;
+    }
+    public bool getActType()
+    {
+        return supporter;
+    }
     public bool getIsOwner()
     {
         return owner;
@@ -88,6 +101,22 @@ public class Character: MonoBehaviour
         {
             defeated();
         }
+    }
+    public void heal(int percent)
+    {
+        if (health >= 100 - percent)
+        {
+            health = 100;
+        }
+        else
+        {
+            health += percent;
+        }
+    }
+    public Character action(Character target)
+    {
+        target.heal(25);
+        return target;
     }
     private void defeated()
     {

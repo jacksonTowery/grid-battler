@@ -23,6 +23,7 @@ public class TestGrid : MonoBehaviour
     bool attack;
     bool move;
     bool act;
+    bool target;
     private int actions = 0;
     // [SerializeField] public Camera camera;
    // [SerializeField] public Component.camera camera;
@@ -118,12 +119,14 @@ public class TestGrid : MonoBehaviour
         attack = true;
         move = false;
         act = false;
+        target=false;
     }
     public void moveTrue() 
     {
         attack=false;
         move = true;
         act = false;
+        target=false;
         Debug.Log("move");
     }
     public void actTrue() 
@@ -131,6 +134,18 @@ public class TestGrid : MonoBehaviour
         attack = false;
         move = false;
         act = true;
+        target=false ;
+    }
+    public void targetTrue()
+    {
+        attack = false;
+        move = false;
+        act = false;
+        target=true ;
+    }
+    public void pass()
+    {
+        changeTurn();
     }
     public void Update()
     {
@@ -152,7 +167,7 @@ public class TestGrid : MonoBehaviour
             Vector3 mouseWorldPosition = UtilsClass.GetMouseWorldPosition();
             //mouseWorldPosition.z = 0f;
             //  Debug.Log(UtilsClass.GetMouseWorldPosition());
-            if (containsCharacter(mouseWorldPosition) && GetCharacter(mouseWorldPosition).getIsOwner())
+            if (containsCharacter(mouseWorldPosition) && GetCharacter(mouseWorldPosition).getIsOwner()&&target)
             {
                 changeCharacter(GetCharacter(mouseWorldPosition));
             }
@@ -209,7 +224,7 @@ public class TestGrid : MonoBehaviour
                     Debug.Log("Out of Range ");
                 }
             }
-            else if (attack && !GetCharacter(mouseWorldPosition).getIsOwner() && !character.getAttack())
+            else if (attack && containsCharacter(mouseWorldPosition)&&!GetCharacter(mouseWorldPosition).getIsOwner() && !character.getAttack())
             {
                changeTargetedCharacter(GetCharacter(mouseWorldPosition));
 
@@ -240,25 +255,48 @@ public class TestGrid : MonoBehaviour
                 }
 
             }
-
-            // characterPathfinding.transform.position = pathFinding.getGrid().GetWorldPosition(x,y)+new Vector3(5,5);
-
-
-            //characterPathfinding.transform.position = mouseWorldPosition;
-            /*while(characterPathfinding.transform.position!=mouseWorldPosition)
+            else if (act && containsCharacter(mouseWorldPosition)&&!character.getAct())
             {
-                characterPathfinding.movementHandler();
-            }*/
-            //  characterPathfinding.movementHandler();
-            //  characterPathfinding.changePosition(mouseWorldPosition);
-            /*  for (int i = 1; i < path.Count - 1; i++)
-              {
-                  //Debug.DrawLine(new Vector3(path[i].x, path[i].y) * 10f + Vector3.one * 5f, new Vector3(path[i + 1].x, path[i + 1].y) * 10f + Vector3.one * 5f, Color.green);
-                   characterPathfinding.movementHandler();
-              }*/
-            //  Vector3 pos=pathFinding.getGrid().GetWorldPosition((int)mouseWorldPosition.x, (int)mouseWorldPosition.y);
-            //  characterPathfinding.transform.position = pos;
-            if(actions>=3)
+                changeTargetedCharacter(GetCharacter(mouseWorldPosition));
+                if (targetedCharacter.getIsOwner() == character.getActType()) 
+                {
+                    Vector3 tarPos = targetedCharacter.getPosition();
+
+                    float dis = Vector3.Distance(targetedCharacter.getPosition(), character.getPosition());
+                    dis /= 10;
+                    // Vector3 dis = (character.getPosition() - targetedCharacter.getPosition()).magnitude;
+
+                    if (dis <= character.getmRange())
+                    {
+                        targetedCharacter=character.action(targetedCharacter);
+                        actions++;
+                        Debug.Log("HP: " + targetedCharacter.getHealth());
+                        
+                    }
+                    else
+                    {
+                        Debug.Log("Out of Range: " + dis);
+                    }
+                }
+            }
+                // characterPathfinding.transform.position = pathFinding.getGrid().GetWorldPosition(x,y)+new Vector3(5,5);
+
+
+                //characterPathfinding.transform.position = mouseWorldPosition;
+                /*while(characterPathfinding.transform.position!=mouseWorldPosition)
+                {
+                    characterPathfinding.movementHandler();
+                }*/
+                //  characterPathfinding.movementHandler();
+                //  characterPathfinding.changePosition(mouseWorldPosition);
+                /*  for (int i = 1; i < path.Count - 1; i++)
+                  {
+                      //Debug.DrawLine(new Vector3(path[i].x, path[i].y) * 10f + Vector3.one * 5f, new Vector3(path[i + 1].x, path[i + 1].y) * 10f + Vector3.one * 5f, Color.green);
+                       characterPathfinding.movementHandler();
+                  }*/
+                //  Vector3 pos=pathFinding.getGrid().GetWorldPosition((int)mouseWorldPosition.x, (int)mouseWorldPosition.y);
+                //  characterPathfinding.transform.position = pos;
+                if (actions>=3)
             {
                 changeTurn();
             }
