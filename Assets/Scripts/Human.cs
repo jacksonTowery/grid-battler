@@ -18,12 +18,13 @@ public class Human : Character
     // Start is called before the first frame update
     void Start()
     {
-        setAtk(4);
+        setAtk(3);
         setDef(3);
         setmRange(4);
         setaRange(4);
+        setactRange(4);
+        setAbillity("boostA");
     }
 
 
-    
 }

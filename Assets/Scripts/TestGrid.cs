@@ -266,7 +266,7 @@ public class TestGrid : MonoBehaviour
                     dis /= 10;
                     // Vector3 dis = (character.getPosition() - targetedCharacter.getPosition()).magnitude;
 
-                    if (dis <= character.getmRange())
+                    if (dis <= character.getactRange())
                     {
                         targetedCharacter=character.action(targetedCharacter);
                         actions++;

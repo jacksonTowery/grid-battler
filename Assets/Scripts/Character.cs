@@ -9,6 +9,7 @@ public class Character: MonoBehaviour
     [SerializeField] private int def;
     [SerializeField] private int mRange;
     [SerializeField] private int aRange;
+    [SerializeField] private int actRange;
     //[SerializeField] private GameObject selectionPrefab;
     //private GameObject newSelection;
     private int health = 100;
@@ -18,6 +19,8 @@ public class Character: MonoBehaviour
     public bool isSelected;
     public bool owner;
     public bool supporter=true;
+    public Abillity ab=new Abillity();
+    public string abType = "heal";
 
     public int getmRange()
     {
@@ -27,6 +30,10 @@ public class Character: MonoBehaviour
     {
         return aRange;
     }
+    public int getactRange()
+    {
+        return actRange;
+    }
     public int getAtk()
     {
         return atk;
@@ -34,6 +41,10 @@ public class Character: MonoBehaviour
     public void setAtk(int a)
     {
         atk = a;
+    }
+    public int getDef()
+    {
+        return def;
     }
     public void setDef(int d)
     {
@@ -46,6 +57,14 @@ public class Character: MonoBehaviour
     public void setaRange(int m)
     {
         aRange = m;
+    }
+    public void setactRange(int m)
+    {
+        actRange = m;
+    }
+    public void setAbillity(string a)
+    {
+        abType = a;
     }
     public int getHealth()
     {
@@ -115,8 +134,8 @@ public class Character: MonoBehaviour
     }
     public Character action(Character target)
     {
-        target.heal(25);
-        return target;
+        return ab.useAnAbillity(abType, target);
+
     }
     private void defeated()
     {
