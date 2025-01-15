@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class TestGrid : MonoBehaviour
@@ -16,6 +17,7 @@ public class TestGrid : MonoBehaviour
     [SerializeField] private Character characterD;
     [SerializeField] private Character characterE;
     [SerializeField] private Character characterF;
+    [SerializeField] private Text turnIdentifier;
     //[SerializeField] private List<Character> characters;
     private Character character;
     private Character targetedCharacter;
@@ -25,6 +27,7 @@ public class TestGrid : MonoBehaviour
     bool act;
     bool target;
     private int actions = 0;
+    int turn = 0;
     // [SerializeField] public Camera camera;
    // [SerializeField] public Component.camera camera;
     void Start()
@@ -113,6 +116,23 @@ public class TestGrid : MonoBehaviour
         actions = 0;
         character=null;
         targetedCharacter = null;
+        turn += 1;
+        turnIdentifier.text = "" + ((turn % 2)+1);
+    }
+    public void checkForVictory()
+    {
+        bool stillAnOpponent = false;
+        foreach (Character character in characters)
+        {
+            if (!character.getIsOwner())
+            {
+                stillAnOpponent= true;
+            }
+        }
+        if (!stillAnOpponent)
+        {
+            Debug.Log("Player " + ((turn % 2)+1) + " Wins");
+        }
     }
     public void attackTrue()
     {
@@ -247,6 +267,7 @@ public class TestGrid : MonoBehaviour
                     if(targetedCharacter.getHealth()<=0)
                     {
                         characters.Remove(targetedCharacter);
+                        checkForVictory();
                     }
                 }
                 else
