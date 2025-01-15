@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NextScene : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void ToBattle()
     {
-        
+        SceneManager.LoadScene("BattleScreen");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ToTeam1()
     {
-        
+        SceneManager.LoadScene("Team1Selection");
+    }
+
+    public void ToTeam2()
+    {
+        SceneManager.LoadScene("Team2Selection");
     }
 }
