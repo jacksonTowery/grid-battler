@@ -5,6 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class NextScene : MonoBehaviour
 {
+
+    public void ToTitle()
+    {
+        SceneManager.LoadScene("TitleScreen");
+    }
+
     public void ToBattle()
     {
         SceneManager.LoadScene("BattleScreen");

@@ -1,9 +1,9 @@
-using System.Collections;
+//using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
+//using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Tilemaps;
+//using UnityEngine.EventSystems;
+//using UnityEngine.Tilemaps;
 
 public class CharacterPathfinding : MonoBehaviour
 {
