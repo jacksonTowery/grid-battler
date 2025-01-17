@@ -92,6 +92,7 @@ public class Grid<TGridObject>
     {
       x=Mathf.FloorToInt((worldPosition-originPosition).x/cellsize);
         y=Mathf.FloorToInt((worldPosition-originPosition).y/cellsize);
+      //  Debug.Log("Alright"+x+" "+y);
     }
 
     public TGridObject getValue(int x, int y)

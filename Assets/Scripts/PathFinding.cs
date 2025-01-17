@@ -206,6 +206,7 @@ public class PathFinding
 
     public Grid<PathNode> getGrid()
     {
+        //Debug.Log("Good"+grid);
         return grid;
     }
     public List<Vector3> FindPath(Vector3 startWorldPosition, Vector3 endWorldPosition)

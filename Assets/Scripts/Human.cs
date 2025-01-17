@@ -24,20 +24,7 @@ public class Human : Character
         setaRange(4);
         setactRange(4);
         setAbillity("boostA");
-       // setName("Astronaut");
-        //Sprite sprite=Resources.Load("Human (2)",typeof(Sprite)) as Sprite;
-<<<<<<< Updated upstream
-       //Sprite sprite=Resources.Load("Assets/Sprites/Human (2)", typeof(Sprite)) as Sprite;
-        //Sprite sprite = Resources.Load<Sprite>("Assets/Sprites/Human (2).png");
-       // setSprite(sprite);
-       // Debug.Log(sprite);
-=======
-        Sprite sprite=Resources.Load("Assets/Sprites/Human (2)") as Sprite;
-        //Sprite sprite = Resources.Load<Sprite>("Assets/Sprites/Human (2).png");
-       // setSprite(sprite);
-        
-        //Debug.Log(sprite);
->>>>>>> Stashed changes
+       //Sprite sprite=Resources.Load("Assets/Sprites/Human (2)") as Sprite;
     }
 
 
