@@ -9,9 +9,9 @@ public class Alien : Character
     {
         setAtk(3);
         setDef(3);
-        setmRange(4);
+        setmRange(5);
         setaRange(4);
-        setactRange(4);
+        setactRange(3);
         setAbillity("lowerA");
         setName("Alien");
         setSupportType(false);

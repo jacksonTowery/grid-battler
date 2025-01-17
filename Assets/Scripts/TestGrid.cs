@@ -193,26 +193,33 @@ public class TestGrid : MonoBehaviour
     }
     public void Update()
     {
-       /* if(Input.GetMouseButtonDown(1))
+        /* if(Input.GetMouseButtonDown(1))
+         {
+             Vector3 mouseWorldPosition = UtilsClass.GetMouseWorldPosition();
+             if (containsCharacter(mouseWorldPosition))
+             {
+                 changeTargetedCharacter(GetCharacter(mouseWorldPosition));
+                 Debug.Log("target");
+             }
+         }
+         else*/
+        if (Input.GetMouseButtonDown(1))
         {
             Vector3 mouseWorldPosition = UtilsClass.GetMouseWorldPosition();
             if (containsCharacter(mouseWorldPosition))
             {
-                changeTargetedCharacter(GetCharacter(mouseWorldPosition));
-                Debug.Log("target");
+                updateStatDisplay(GetCharacter(mouseWorldPosition));
             }
         }
-        else*/ if (Input.GetMouseButtonDown(0))
+
+            if (Input.GetMouseButtonDown(0))
         {
             
            // Debug.Log("good");
           //  Console.Write("good");
             // Vector3 mouseWorldPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
             Vector3 mouseWorldPosition = UtilsClass.GetMouseWorldPosition();
-            if (containsCharacter(mouseWorldPosition))
-            {
-                updateStatDisplay(GetCharacter(mouseWorldPosition));
-            }
+            
             //mouseWorldPosition.z = 0f;
             //  Debug.Log(UtilsClass.GetMouseWorldPosition());
             if (containsCharacter(mouseWorldPosition) && GetCharacter(mouseWorldPosition).getIsOwner()&&target)
@@ -328,24 +335,28 @@ public class TestGrid : MonoBehaviour
                     }
                 }
             }
-                // characterPathfinding.transform.position = pathFinding.getGrid().GetWorldPosition(x,y)+new Vector3(5,5);
+            // characterPathfinding.transform.position = pathFinding.getGrid().GetWorldPosition(x,y)+new Vector3(5,5);
 
 
-                //characterPathfinding.transform.position = mouseWorldPosition;
-                /*while(characterPathfinding.transform.position!=mouseWorldPosition)
-                {
-                    characterPathfinding.movementHandler();
-                }*/
-                //  characterPathfinding.movementHandler();
-                //  characterPathfinding.changePosition(mouseWorldPosition);
-                /*  for (int i = 1; i < path.Count - 1; i++)
-                  {
-                      //Debug.DrawLine(new Vector3(path[i].x, path[i].y) * 10f + Vector3.one * 5f, new Vector3(path[i + 1].x, path[i + 1].y) * 10f + Vector3.one * 5f, Color.green);
-                       characterPathfinding.movementHandler();
-                  }*/
-                //  Vector3 pos=pathFinding.getGrid().GetWorldPosition((int)mouseWorldPosition.x, (int)mouseWorldPosition.y);
-                //  characterPathfinding.transform.position = pos;
-                if (actions==0)
+            //characterPathfinding.transform.position = mouseWorldPosition;
+            /*while(characterPathfinding.transform.position!=mouseWorldPosition)
+            {
+                characterPathfinding.movementHandler();
+            }*/
+            //  characterPathfinding.movementHandler();
+            //  characterPathfinding.changePosition(mouseWorldPosition);
+            /*  for (int i = 1; i < path.Count - 1; i++)
+              {
+                  //Debug.DrawLine(new Vector3(path[i].x, path[i].y) * 10f + Vector3.one * 5f, new Vector3(path[i + 1].x, path[i + 1].y) * 10f + Vector3.one * 5f, Color.green);
+                   characterPathfinding.movementHandler();
+              }*/
+            //  Vector3 pos=pathFinding.getGrid().GetWorldPosition((int)mouseWorldPosition.x, (int)mouseWorldPosition.y);
+            //  characterPathfinding.transform.position = pos;
+            if (containsCharacter(mouseWorldPosition))
+            {
+                updateStatDisplay(GetCharacter(mouseWorldPosition));
+            }
+            if (actions==0)
             {
                 changeTurn();
             }

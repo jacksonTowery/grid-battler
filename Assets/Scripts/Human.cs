@@ -26,10 +26,10 @@ public class Human : Character
         setAbillity("boostA");
         setName("Astronaut");
         //Sprite sprite=Resources.Load("Human (2)",typeof(Sprite)) as Sprite;
-        Sprite sprite=Resources.Load("Assets/Sprites/Human (2)", typeof(Sprite)) as Sprite;
+       //Sprite sprite=Resources.Load("Assets/Sprites/Human (2)", typeof(Sprite)) as Sprite;
         //Sprite sprite = Resources.Load<Sprite>("Assets/Sprites/Human (2).png");
-        setSprite(sprite);
-        Debug.Log(sprite);
+       // setSprite(sprite);
+       // Debug.Log(sprite);
     }
 
 
