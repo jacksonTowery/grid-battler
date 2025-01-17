@@ -13,5 +13,7 @@ public class Alien : Character
         setaRange(4);
         setactRange(4);
         setAbillity("lowerA");
+        setName("Alien");
+        setSupportType(false);
     }
 }

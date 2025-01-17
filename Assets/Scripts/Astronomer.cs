@@ -13,5 +13,6 @@ public class Astronomer : Character
         setaRange(5);
         setactRange(3);
         setAbillity("boostM");
+        setName("Astronomer");
     }
 }

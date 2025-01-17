@@ -10,6 +10,12 @@ public class Character: MonoBehaviour
     [SerializeField] private int mRange;
     [SerializeField] private int aRange;
     [SerializeField] private int actRange;
+    [SerializeField] private Sprite human;
+    [SerializeField] private Sprite Astronomer;
+    [SerializeField] private Sprite Tank;
+    [SerializeField] private Sprite Alien;
+    [SerializeField] private Sprite Axel;
+    [SerializeField] private Sprite Robot;
     //[SerializeField] private GameObject selectionPrefab;
     //private GameObject newSelection;
     private int health = 100;
@@ -21,6 +27,7 @@ public class Character: MonoBehaviour
     public bool supporter=true;
     public Abillity ab=new Abillity();
     public string abType = "heal";
+    public string name = "Beta";
 
     public int getmRange()
     {
@@ -73,6 +80,22 @@ public class Character: MonoBehaviour
     public bool getMoved()
     {
        return moved;
+    }
+    public string getName()
+    {
+        return name;
+    }
+    public void setName(string a)
+    {
+        name = a;
+    }
+    public string getAction()
+    {
+        return abType;
+    }
+    public void setSupportType(bool b)
+    {
+        supporter= b;
     }
 
     public void Moved()
@@ -150,6 +173,11 @@ public class Character: MonoBehaviour
     public void change()
     {
         owner = !owner;
+    }
+    public void setSprite(Sprite s)
+    {
+
+            gameObject.GetComponent<SpriteRenderer>().sprite = s;
     }
 
 

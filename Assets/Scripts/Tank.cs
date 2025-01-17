@@ -13,6 +13,7 @@ public class Tank : Character
         setaRange(3);
         setactRange(3);
         setAbillity("boostD");
+        setName("Tank");
     }
 
 }

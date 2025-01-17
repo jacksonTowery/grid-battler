@@ -18,6 +18,8 @@ public class TestGrid : MonoBehaviour
     [SerializeField] private Character characterE;
     [SerializeField] private Character characterF;
     [SerializeField] private Text turnIdentifier;
+    [SerializeField] private Text StatDisplay;
+    [SerializeField] private Text actionCount;
     //[SerializeField] private List<Character> characters;
     private Character character;
     private Character targetedCharacter;
@@ -26,7 +28,7 @@ public class TestGrid : MonoBehaviour
     bool move;
     bool act;
     bool target;
-    private int actions = 0;
+    private int actions = 3;
     int turn = 0;
     // [SerializeField] public Camera camera;
    // [SerializeField] public Component.camera camera;
@@ -113,7 +115,7 @@ public class TestGrid : MonoBehaviour
             }
             character.change();
         }
-        actions = 0;
+        resetActionCount();
         character=null;
         targetedCharacter = null;
         turn += 1;
@@ -133,6 +135,28 @@ public class TestGrid : MonoBehaviour
         {
             Debug.Log("Player " + ((turn % 2)+1) + " Wins");
         }
+    }
+    public void updateStatDisplay(Character stat)
+    {
+        string name =stat.getName();
+        string health=""+stat.getHealth();
+        string atk=""+stat.getAtk();
+        string def = "" + stat.getDef();
+        string m = "" + stat.getmRange();
+        string ar = "" + stat.getaRange();
+        string acr = "" + stat.getactRange();
+        string ab=""+stat.getAction();
+        StatDisplay.text = "Name: " + name + "\r\nHealth: " + health + "\r\nAttack: " + atk + "\r\nDefense: " + def + "\r\nMovement Range: " + m + "\r\nAttack Range: " + ar + "\r\nAbillity Range: " + acr + "\r\nAbillity: " + ab;
+    }
+    public void useAnAction()
+    {
+        actions--;
+        actionCount.text = "" + actions;
+    }
+    public void resetActionCount()
+    {
+        actions = 3;
+        actionCount.text=""+actions;
     }
     public void attackTrue()
     {
@@ -185,6 +209,10 @@ public class TestGrid : MonoBehaviour
           //  Console.Write("good");
             // Vector3 mouseWorldPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
             Vector3 mouseWorldPosition = UtilsClass.GetMouseWorldPosition();
+            if (containsCharacter(mouseWorldPosition))
+            {
+                updateStatDisplay(GetCharacter(mouseWorldPosition));
+            }
             //mouseWorldPosition.z = 0f;
             //  Debug.Log(UtilsClass.GetMouseWorldPosition());
             if (containsCharacter(mouseWorldPosition) && GetCharacter(mouseWorldPosition).getIsOwner()&&target)
@@ -237,7 +265,7 @@ public class TestGrid : MonoBehaviour
                 {
                     character.SetPosition(pathFinding.getGrid().GetWorldPosition(xEnd, yEnd) + new Vector3(5, 5));
                     character.Moved();
-                    actions++;
+                    useAnAction();
                 }
                 else
                 {
@@ -262,7 +290,7 @@ public class TestGrid : MonoBehaviour
                 {
                     targetedCharacter.takeDammage(character.getAtk());
                     character.attack();
-                    actions++;
+                    useAnAction() ;
                     Debug.Log("HP: " + targetedCharacter.getHealth());
                     if(targetedCharacter.getHealth()<=0)
                     {
@@ -290,7 +318,7 @@ public class TestGrid : MonoBehaviour
                     if (dis <= character.getactRange())
                     {
                         targetedCharacter=character.action(targetedCharacter);
-                        actions++;
+                        useAnAction();
                         Debug.Log("HP: " + targetedCharacter.getHealth());
                         
                     }
@@ -317,7 +345,7 @@ public class TestGrid : MonoBehaviour
                   }*/
                 //  Vector3 pos=pathFinding.getGrid().GetWorldPosition((int)mouseWorldPosition.x, (int)mouseWorldPosition.y);
                 //  characterPathfinding.transform.position = pos;
-                if (actions>=3)
+                if (actions==0)
             {
                 changeTurn();
             }
