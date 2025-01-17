@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -202,8 +201,13 @@ public class TestGrid : MonoBehaviour
                  Debug.Log("target");
              }
          }
+<<<<<<< Updated upstream
          else*/
         if (Input.GetMouseButtonDown(1))
+=======
+        */
+        if(Input.GetMouseButtonDown(1))
+>>>>>>> Stashed changes
         {
             Vector3 mouseWorldPosition = UtilsClass.GetMouseWorldPosition();
             if (containsCharacter(mouseWorldPosition))
@@ -211,15 +215,24 @@ public class TestGrid : MonoBehaviour
                 updateStatDisplay(GetCharacter(mouseWorldPosition));
             }
         }
+<<<<<<< Updated upstream
 
             if (Input.GetMouseButtonDown(0))
+=======
+        
+
+        if (Input.GetMouseButtonDown(0))
+>>>>>>> Stashed changes
         {
             
            // Debug.Log("good");
           //  Console.Write("good");
             // Vector3 mouseWorldPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
             Vector3 mouseWorldPosition = UtilsClass.GetMouseWorldPosition();
+<<<<<<< Updated upstream
             
+=======
+>>>>>>> Stashed changes
             //mouseWorldPosition.z = 0f;
             //  Debug.Log(UtilsClass.GetMouseWorldPosition());
             if (containsCharacter(mouseWorldPosition) && GetCharacter(mouseWorldPosition).getIsOwner()&&target)

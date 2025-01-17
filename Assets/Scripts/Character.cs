@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using System.Linq;
 
 public class Character: MonoBehaviour 
 {
@@ -11,11 +12,19 @@ public class Character: MonoBehaviour
     [SerializeField] private int aRange;
     [SerializeField] private int actRange;
     //[SerializeField] private Sprite human;
+<<<<<<< Updated upstream
     //[SerializeField] private Sprite Astronomer;
    // [SerializeField] private Sprite Tank;
    // [SerializeField] private Sprite Alien;
    // [SerializeField] private Sprite Axel;
    // [SerializeField] private Sprite Robot;
+=======
+   // [SerializeField] private Sprite Astronomer;
+    //[SerializeField] private Sprite Tank;
+   // [SerializeField] private Sprite Alien;
+    //[SerializeField] private Sprite Axel;
+    //[SerializeField] private Sprite Robot;
+>>>>>>> Stashed changes
     //[SerializeField] private GameObject selectionPrefab;
     //private GameObject newSelection;
     private int health = 100;
@@ -28,6 +37,7 @@ public class Character: MonoBehaviour
     public Abillity ab=new Abillity();
     public string abType = "heal";
     public string name = "Beta";
+   // public Sprite[] sprites=Resources.LoadAll("Spites",  typeof(Sprite)).Cast<Sprite>().ToArray();
 
     public int getmRange()
     {
