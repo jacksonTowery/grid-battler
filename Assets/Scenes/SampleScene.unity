@@ -1652,12 +1652,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdf012eb64a55bc48bf7746128c96910, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterA: {fileID: 0}
-  characterB: {fileID: 0}
-  characterC: {fileID: 0}
-  characterD: {fileID: 0}
-  characterE: {fileID: 0}
-  characterF: {fileID: 0}
+  characterA: {fileID: 469414450}
+  characterB: {fileID: 281268195}
+  characterC: {fileID: 1863994721}
+  characterD: {fileID: 286257190}
+  characterE: {fileID: 1946025805}
+  characterF: {fileID: 426563938}
   turnIdentifier: {fileID: 238956935}
   StatDisplay: {fileID: 1979073663}
   actionCount: {fileID: 523974048}
