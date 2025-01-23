@@ -14,6 +14,8 @@ public class Tank : Character
         setactRange(3);
         setAbillity("boostD");
         setName("Tank");
+        Sprite sprite = Resources.Load<Sprite>("Sprites/Tank");
+        setSprite(sprite);
     }
 
 }

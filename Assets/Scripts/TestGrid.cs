@@ -19,6 +19,9 @@ public class TestGrid : MonoBehaviour
     [SerializeField] private Text turnIdentifier;
     [SerializeField] private Text StatDisplay;
     [SerializeField] private Text actionCount;
+    [SerializeField] private UnityEngine.UI.Image StatDisplaySprite;
+    [SerializeField] private UnityEngine.UI.Image CurrentSprite;
+    [SerializeField] private Text currentDisplay;
     //[SerializeField] private List<Character> characters;
     private Character character;
     private Character targetedCharacter;
@@ -33,8 +36,11 @@ public class TestGrid : MonoBehaviour
    // [SerializeField] public Component.camera camera;
     void Start()
     {
+        Sprite spriteP = Resources.Load<Sprite>("Sprites/Human (2)");
+        Sprite spriteD = Resources.Load<Sprite>("Sprites/Tile");
+        Debug.Log(spriteD);
         //  Grid<bool> grid = new Grid<bool>(11, 11, 10f, new Vector3(20,0), ()=> new bool());
-        pathFinding = new PathFinding(11, 11);
+        pathFinding = new PathFinding(11, 11, spriteP,spriteD);
          characters = new List<Character>();
          characters.Add(characterA);
          characters.Add(characterB);
@@ -51,6 +57,7 @@ public class TestGrid : MonoBehaviour
         {
             this.character = character;
         }
+        updateCurrentDisplay(character);
     }
     public void changeTargetedCharacter(Character tarCharacter)
     {
@@ -117,6 +124,7 @@ public class TestGrid : MonoBehaviour
         resetActionCount();
         character=null;
         targetedCharacter = null;
+        updateCurrentDisplay(character);
         turn += 1;
         turnIdentifier.text = "" + ((turn % 2)+1);
     }
@@ -137,6 +145,7 @@ public class TestGrid : MonoBehaviour
     }
     public void updateStatDisplay(Character stat)
     {
+        StatDisplaySprite.sprite=stat.GetComponent<SpriteRenderer>().sprite;
         string name =stat.getName();
         string health=""+stat.getHealth();
         string atk=""+stat.getAtk();
@@ -146,6 +155,29 @@ public class TestGrid : MonoBehaviour
         string acr = "" + stat.getactRange();
         string ab=""+stat.getAction();
         StatDisplay.text = "Name: " + name + "\r\nHealth: " + health + "\r\nAttack: " + atk + "\r\nDefense: " + def + "\r\nMovement Range: " + m + "\r\nAttack Range: " + ar + "\r\nAbillity Range: " + acr + "\r\nAbillity: " + ab;
+    }
+    public void updateCurrentDisplay(Character current)
+    {
+        if (current == null)
+        {
+            CurrentSprite.sprite = null;
+            currentDisplay.text = "Select a Character.";
+        }
+        else
+        {
+            CurrentSprite.sprite = current.GetComponent<SpriteRenderer>().sprite;
+            String state = "";
+            if (attack)
+            {
+                state = " to Attack.";
+            }
+            else if (move)
+            { state = " to Move."; }
+            else if (act)
+            { state = " to use its Power."; }
+            else { state = "."; }
+            currentDisplay.text = "" + current.getName() + " is ready" + state;
+        }
     }
     public void useAnAction()
     {
@@ -163,6 +195,7 @@ public class TestGrid : MonoBehaviour
         move = false;
         act = false;
         target=false;
+        updateCurrentDisplay(character);
     }
     public void moveTrue() 
     {
@@ -170,7 +203,8 @@ public class TestGrid : MonoBehaviour
         move = true;
         act = false;
         target=false;
-        Debug.Log("move");
+        updateCurrentDisplay(character);
+        // Debug.Log("move");
     }
     public void actTrue() 
     {
@@ -178,6 +212,7 @@ public class TestGrid : MonoBehaviour
         move = false;
         act = true;
         target=false ;
+        updateCurrentDisplay(character);
     }
     public void targetTrue()
     {
@@ -185,6 +220,7 @@ public class TestGrid : MonoBehaviour
         move = false;
         act = false;
         target=true ;
+        updateCurrentDisplay(character);
     }
     public void pass()
     {
@@ -213,7 +249,6 @@ public class TestGrid : MonoBehaviour
             }
         }
 
-            if (Input.GetMouseButtonDown(0))
         
 
         if (Input.GetMouseButtonDown(0))
@@ -271,7 +306,7 @@ public class TestGrid : MonoBehaviour
                        }
                    }*/
 
-                if (path.Count <= character.getmRange())
+                if (path.Count <= character.getmRange()+1)
                 {
                     character.SetPosition(pathFinding.getGrid().GetWorldPosition(xEnd, yEnd) + new Vector3(5, 5));
                     character.Moved();

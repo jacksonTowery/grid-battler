@@ -14,6 +14,8 @@ public class Robot : Character
         setactRange(4);
         setAbillity("heal");
         setName("Robot");
+        Sprite sprite = Resources.Load<Sprite>("Sprites/Medic");
+        setSprite(sprite);
     }
 
 }

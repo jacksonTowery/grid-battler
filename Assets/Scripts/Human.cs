@@ -23,8 +23,11 @@ public class Human : Character
         setmRange(4);
         setaRange(4);
         setactRange(4);
+        setName("Astronaut");
         setAbillity("boostA");
-       //Sprite sprite=Resources.Load("Assets/Sprites/Human (2)") as Sprite;
+        //Sprite sprite=Resources.Load("Assets/Sprites/Human (2)") as Sprite;
+        Sprite sprite = Resources.Load<Sprite>("Sprites/Human (2)");
+        setSprite(sprite);
     }
 
 

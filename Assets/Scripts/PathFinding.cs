@@ -15,12 +15,18 @@ public class PathFinding
     private List<PathNode> closedList;
     private int width;
     private int height;
-    public PathFinding(int width, int height)
+    private Mesh mesh;
+    private Sprite defaultSprite;
+    private Sprite pathSprite;
+    public PathFinding(int width, int height, Sprite pathSprite,Sprite defaultSprite)
     {
         Instance = this;
         this.width = width;
         this.height = height;
-        grid = new Grid<PathNode>(width, height, 10f, Vector3.zero, (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y));
+        grid = new Grid<PathNode>(width, height, 10f, Vector3.zero, (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y),defaultSprite);
+        mesh = new Mesh();
+        this.pathSprite = pathSprite;
+        this.defaultSprite = defaultSprite;
         // Instance=this;
     }
 
@@ -179,7 +185,7 @@ public class PathFinding
         path.Reverse();
         // Debug.Log("good here "+ path);
         // return path;
-        grid=new Grid<PathNode>(width, height, 10f, Vector3.zero, (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y));
+        grid=new Grid<PathNode>(width, height, 10f, Vector3.zero, (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y), null);
         return path;
     }
 

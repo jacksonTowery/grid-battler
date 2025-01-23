@@ -14,5 +14,7 @@ public class Astronomer : Character
         setactRange(3);
         setAbillity("boostM");
         setName("Astronomer");
+        Sprite sprite = Resources.Load<Sprite>("Sprites/Long_Range");
+        setSprite(sprite);
     }
 }
