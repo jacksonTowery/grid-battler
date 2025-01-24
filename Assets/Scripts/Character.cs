@@ -127,6 +127,7 @@ public class Character: MonoBehaviour
     {
         return transform.position;
     }
+    
 
     public void SetPosition(Vector3 pos)
     {

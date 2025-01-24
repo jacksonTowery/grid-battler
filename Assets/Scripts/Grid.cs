@@ -39,7 +39,7 @@ public class Grid<TGridObject>
         {
             for(int y=0;  y<gridArray.GetLength(1); y++)
             {
-                 //debugArray[x,y]= CreateWorldText(defaultSprite, gridArray[x, y].ToString(), null, GetWorldPosition(x, y)+new Vector3(cellsize,cellsize)*.5f, 20, Color.white, TextAnchor.MiddleCenter);
+                 debugArray[x,y]= CreateWorldText(defaultSprite, gridArray[x, y].ToString(), null, GetWorldPosition(x, y)+new Vector3(cellsize,cellsize)*.5f, 20, Color.white, TextAnchor.MiddleCenter);
                  spriteArray[x,y]=CreateWorldSprite(null, GetWorldPosition(x,y)+new Vector3(cellsize,cellsize)*.5f, defaultSprite);
                // debugArray[x, y].GetComponent<SpriteRenderer>().sprite = defaultSprite;
 
@@ -51,6 +51,44 @@ public class Grid<TGridObject>
         Debug.DrawLine(GetWorldPosition(width,0), GetWorldPosition(width,height), Color.white, 100f);
 
 
+    }
+    public void resetGrid(Func<Grid<TGridObject>, int, int, TGridObject> createGridObject)
+    {
+        for (int x = 0; x < gridArray.GetLength(0); x++)
+        {
+            for (int y = 0; y < gridArray.GetLength(1); y++)
+            {
+                gridArray[x, y] = createGridObject(this, x, y);
+            }
+        }
+
+       /* for (int x = 0; x < gridArray.GetLength(0); x++)
+        {
+            for (int y = 0; y < gridArray.GetLength(1); y++)
+            {
+                //debugArray[x,y]= CreateWorldText(defaultSprite, gridArray[x, y].ToString(), null, GetWorldPosition(x, y)+new Vector3(cellsize,cellsize)*.5f, 20, Color.white, TextAnchor.MiddleCenter);
+                spriteArray[x, y] = CreateWorldSprite(null, GetWorldPosition(x, y) + new Vector3(cellsize, cellsize) * .5f, defaultSprite);
+                // debugArray[x, y].GetComponent<SpriteRenderer>().sprite = defaultSprite;
+
+                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
+                Debug.DrawLine(GetWorldPosition(x + 1, y), GetWorldPosition(x, y), Color.white, 100f);
+            }
+        }*/
+
+    }
+    public void destroy()
+    {
+       // GameObject.Destroy();
+    }
+    public void eraseGrid()
+    {
+        for (int x = 0; x < gridArray.GetLength(0); x++)
+        {
+            for (int y = 0; y < gridArray.GetLength(1); y++)
+            {
+                
+            }
+        }
     }
 
     public static TextMesh CreateWorldText(Sprite sprite, string text, Transform parent=null, Vector3 localPosition=default(Vector3),int fontsize=40, Color? color=null, TextAnchor textAnchor=TextAnchor.UpperLeft)
@@ -136,6 +174,13 @@ public class Grid<TGridObject>
         GetXY(worldPosition, out x, out y);
         return getValue(x, y);
     }
+    public bool hasValue(int x, int y)
+    {
+        if (x >= 0 && y >= 0 && x <= width && y <= height&&getValue(x,y)!=null)
+            return true;
+
+        return false;
+    }
     public int getWidth()
     {
         return width;
@@ -147,5 +192,21 @@ public class Grid<TGridObject>
     public float getCellSize()
     {
         return cellsize;
+    }
+    public void resetSprites()
+    {
+        for (int x = 0; x < gridArray.GetLength(0); x++)
+        {
+            for (int y = 0; y < gridArray.GetLength(1); y++)
+            {
+                //debugArray[x, y] = CreateWorldText(defaultSprite, gridArray[x, y].ToString(), null, GetWorldPosition(x, y) + new Vector3(cellsize, cellsize) * .5f, 20, Color.white, TextAnchor.MiddleCenter);
+                spriteArray[x, y].sprite=defaultSprite;
+                // debugArray[x, y].GetComponent<SpriteRenderer>().sprite = defaultSprite;
+            }
+        }
+    }
+    public void setSprite(Sprite sprite, int x, int y)
+    {
+        spriteArray[x,y].sprite = sprite;
     }
 }

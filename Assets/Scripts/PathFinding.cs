@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class PathFinding
 {
     private const int MOVE_STRAIGHT_COST = 10;
-    private const int MOVE_DIAGONAL_COST = 14;
+    //private const int MOVE_DIAGONAL_COST = 14;
+    private const int MOVE_DIAGONAL_COST = 100;
 
     public static PathFinding Instance { get; private set; }
 
@@ -30,7 +32,7 @@ public class PathFinding
         // Instance=this;
     }
 
-    public List<PathNode> FindPath(int startX, int startY, int endX, int endY)
+    public List<PathNode> FindPath(int startX, int startY, int endX, int endY, bool useIsWalkable)
     {
         PathNode startNode = grid.getValue(startX, startY);
         PathNode endNode = grid.getValue(endX, endY);
@@ -76,11 +78,14 @@ public class PathFinding
 
             foreach (PathNode neighborNode in getNeighbourList(currentNode)) {
                 if (closedList.Contains(neighborNode)) continue;
-                /* if(!neighborNode.isWalkable)
-                 {
-                     closedList.Add(neighborNode);
-                     continue;
-                 }*/
+                /*if (useIsWalkable)
+                {
+                    if (!neighborNode.getIsWalkable())
+                    {
+                        closedList.Add(neighborNode);
+                        continue;
+                    }
+                }*/
 
                 int tentativeGcost = currentNode.gCost + calculateDistance(currentNode, neighborNode);
 
@@ -185,7 +190,8 @@ public class PathFinding
         path.Reverse();
         // Debug.Log("good here "+ path);
         // return path;
-        grid=new Grid<PathNode>(width, height, 10f, Vector3.zero, (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y), null);
+       // grid=new Grid<PathNode>(width, height, 10f, Vector3.zero, (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y), null);
+       grid.resetGrid((Grid<PathNode> g, int x, int y) => new PathNode(g, x, y));
         return path;
     }
 
@@ -215,13 +221,13 @@ public class PathFinding
         //Debug.Log("Good"+grid);
         return grid;
     }
-    public List<Vector3> FindPath(Vector3 startWorldPosition, Vector3 endWorldPosition)
+    public List<Vector3> FindPath(Vector3 startWorldPosition, Vector3 endWorldPosition, bool walkable)
     {
         grid.GetXY(startWorldPosition, out int startX, out int startY);
         grid.GetXY(endWorldPosition, out int endX, out int endY);
         // Debug.Log("good here");*/
         List<PathNode> path = new List<PathNode>();
-        path = FindPath(startX, startY, endX, endY);
+        path = FindPath(startX, startY, endX, endY, walkable);
         // Debug.Log("goody");
         if (path == null)
         {
@@ -238,6 +244,37 @@ public class PathFinding
             return vectorPath;
         }
 
+    }
+    public bool checkIsWalkable(List<PathNode> pathNodes)
+    {
+        foreach(PathNode pathNode in pathNodes)
+        {
+            if (!pathNode.isWalkable)
+                return false;
+        }
+        return true;
+    }
+    public void setPathSprite(int maxMove, int xPos, int yPos, bool walkable)
+    {
+        List<PathNode> path;
+        for (int x = xPos-maxMove; x <= xPos+maxMove; x++)
+        {
+            for(int y = yPos-maxMove; y <= yPos+maxMove; y++)
+            {
+                if (grid.hasValue(x, y))
+                {
+                    if (grid.getValue(x, y).getIsWalkable())
+                    {
+                        path = FindPath(xPos, yPos, x, y, walkable);
+                        if (path.Count <= maxMove&&checkIsWalkable(path))
+                        {
+                            grid.setSprite(pathSprite, x, y);
+                           
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
