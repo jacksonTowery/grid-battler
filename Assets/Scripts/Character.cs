@@ -18,34 +18,41 @@ public class Character: MonoBehaviour
     public bool isSelected;
     public bool owner;
     public bool supporter=true;
+    public Sprite charSprite;
 
+    //public string 
+
+    public void setmRange(int m)
+    {
+        mRange = m;
+    }
     public int getmRange()
     {
         return mRange;
+    }
+    public void setaRange(int m)
+    {
+        aRange = m;
     }
     public int getaRange() 
     {
         return aRange;
     }
-    public int getAtk()
-    {
-        return atk;
-    }
     public void setAtk(int a)
     {
         atk = a;
+    }
+    public int getAtk()
+    {
+        return atk;
     }
     public void setDef(int d)
     {
         def = d;
     }
-    public void setmRange(int m)
+    public int getDef()
     {
-        mRange = m;
-    }
-    public void setaRange(int m)
-    {
-        aRange = m;
+        return def;
     }
     public int getHealth()
     {
