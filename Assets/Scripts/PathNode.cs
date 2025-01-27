@@ -31,6 +31,14 @@ public class PathNode
     {
         return x + "," + y;
     }
+    public bool getIsWalkable()
+    {
+        return isWalkable;
+    }
+    public void setIsWalkable(bool isWalkable)
+    {
+        this.isWalkable = isWalkable;
+    }
 
 
 

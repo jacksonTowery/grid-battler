@@ -21,8 +21,8 @@ public class GridHandler_Combat : MonoBehaviour
         float cellsize = 10f;
         Vector3 origin = new Vector3(0, 0);
         //bool t = true;
-
-        grid = new Grid<EmptyGridObject>(mapWidth, mapHeight, cellsize, origin, (Grid<EmptyGridObject> g, int x, int y) => new EmptyGridObject());
+        Sprite sprite = null;
+        grid = new Grid<EmptyGridObject>( mapWidth, mapHeight, cellsize, origin, (Grid<EmptyGridObject> g, int x, int y) => new EmptyGridObject(), sprite);
        // gridPathFinding = new PathFinding(origin + new Vector3(1, 1) * cellsize * .5f, new Vector3(mapWidth, mapHeight));
     }
     // Start is called before the first frame update

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using System.Linq;
 
 public class Character: MonoBehaviour 
 {
@@ -9,8 +10,9 @@ public class Character: MonoBehaviour
     [SerializeField] private int def;
     [SerializeField] private int mRange;
     [SerializeField] private int aRange;
-    //[SerializeField] private GameObject selectionPrefab;
-    //private GameObject newSelection;
+    [SerializeField] private int actRange;
+
+  
     private int health = 100;
     private bool attacked=false;
     private bool moved=false;
@@ -18,41 +20,54 @@ public class Character: MonoBehaviour
     public bool isSelected;
     public bool owner;
     public bool supporter=true;
-    public Sprite charSprite;
+    public Abillity ab=new Abillity();
+    public string abType = "heal";
+    public string name = "Beta";
+   // public Sprite[] sprites=Resources.LoadAll("Spites",  typeof(Sprite)).Cast<Sprite>().ToArray();
 
-    //public string 
-
-    public void setmRange(int m)
-    {
-        mRange = m;
-    }
     public int getmRange()
     {
         return mRange;
-    }
-    public void setaRange(int m)
-    {
-        aRange = m;
     }
     public int getaRange() 
     {
         return aRange;
     }
-    public void setAtk(int a)
+    public int getactRange()
     {
-        atk = a;
+        return actRange;
     }
     public int getAtk()
     {
         return atk;
     }
-    public void setDef(int d)
+    public void setAtk(int a)
     {
-        def = d;
+        atk = a;
     }
     public int getDef()
     {
         return def;
+    }
+    public void setDef(int d)
+    {
+        def = d;
+    }
+    public void setmRange(int m)
+    {
+        mRange = m;
+    }
+    public void setaRange(int m)
+    {
+        aRange = m;
+    }
+    public void setactRange(int m)
+    {
+        actRange = m;
+    }
+    public void setAbillity(string a)
+    {
+        abType = a;
     }
     public int getHealth()
     {
@@ -61,6 +76,22 @@ public class Character: MonoBehaviour
     public bool getMoved()
     {
        return moved;
+    }
+    public string getName()
+    {
+        return name;
+    }
+    public void setName(string a)
+    {
+        name = a;
+    }
+    public string getAction()
+    {
+        return abType;
+    }
+    public void setSupportType(bool b)
+    {
+        supporter= b;
     }
 
     public void Moved()
@@ -96,6 +127,7 @@ public class Character: MonoBehaviour
     {
         return transform.position;
     }
+    
 
     public void SetPosition(Vector3 pos)
     {
@@ -122,8 +154,8 @@ public class Character: MonoBehaviour
     }
     public Character action(Character target)
     {
-        target.heal(25);
-        return target;
+        return ab.useAnAbillity(abType, target);
+
     }
     private void defeated()
     {
@@ -138,6 +170,11 @@ public class Character: MonoBehaviour
     public void change()
     {
         owner = !owner;
+    }
+    public void setSprite(Sprite s)
+    {
+
+            gameObject.GetComponent<SpriteRenderer>().sprite = s;
     }
 
 

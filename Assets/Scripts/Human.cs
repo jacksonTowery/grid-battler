@@ -18,12 +18,17 @@ public class Human : Character
     // Start is called before the first frame update
     void Start()
     {
-        setAtk(4);
+        setAtk(3);
         setDef(3);
         setmRange(4);
         setaRange(4);
+        setactRange(4);
+        setName("Astronaut");
+        setAbillity("boostA");
+        //Sprite sprite=Resources.Load("Assets/Sprites/Human (2)") as Sprite;
+        Sprite sprite = Resources.Load<Sprite>("Sprites/Human (2)");
+        setSprite(sprite);
     }
 
 
-    
 }

@@ -1,9 +1,9 @@
-//using System;
-//using System.Collections;
+using System;
+using System.Collections;
 using System.Collections.Generic;
-//using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-//using UnityEngine.UIElements;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class TestGrid : MonoBehaviour
 {
@@ -16,6 +16,12 @@ public class TestGrid : MonoBehaviour
     [SerializeField] private Character characterD;
     [SerializeField] private Character characterE;
     [SerializeField] private Character characterF;
+    [SerializeField] private Text turnIdentifier;
+    [SerializeField] private Text StatDisplay;
+    [SerializeField] private Text actionCount;
+    [SerializeField] private UnityEngine.UI.Image StatDisplaySprite;
+    [SerializeField] private UnityEngine.UI.Image CurrentSprite;
+    [SerializeField] private Text currentDisplay;
     //[SerializeField] private List<Character> characters;
     private Character character;
     private Character targetedCharacter;
@@ -24,13 +30,17 @@ public class TestGrid : MonoBehaviour
     bool move;
     bool act;
     bool target;
-    private int actions = 0;
+    private int actions = 3;
+    int turn = 0;
     // [SerializeField] public Camera camera;
    // [SerializeField] public Component.camera camera;
     void Start()
     {
+        Sprite spriteP = Resources.Load<Sprite>("Sprites/Selectable_Tile");
+        Sprite spriteD = Resources.Load<Sprite>("Sprites/Tile");
+        Debug.Log(spriteD);
         //  Grid<bool> grid = new Grid<bool>(11, 11, 10f, new Vector3(20,0), ()=> new bool());
-        pathFinding = new PathFinding(11, 11);
+        pathFinding = new PathFinding(11, 11, spriteP,spriteD);
          characters = new List<Character>();
          characters.Add(characterA);
          characters.Add(characterB);
@@ -40,6 +50,7 @@ public class TestGrid : MonoBehaviour
          characters.Add(characterF);
         //changeCharacter(characterA);
         //changeTargetedCharacter(characterE);
+        
     }
     public void changeCharacter(Character character)
     {
@@ -47,6 +58,7 @@ public class TestGrid : MonoBehaviour
         {
             this.character = character;
         }
+        updateCurrentDisplay(character);
     }
     public void changeTargetedCharacter(Character tarCharacter)
     {
@@ -110,9 +122,74 @@ public class TestGrid : MonoBehaviour
             }
             character.change();
         }
-        actions = 0;
-        character=null;
+        resetActionCount();
+        pathFinding.getGrid().resetSprites();
+        character =null;
         targetedCharacter = null;
+        updateCurrentDisplay(character);
+        turn += 1;
+        turnIdentifier.text = "" + ((turn % 2)+1);
+    }
+    public void checkForVictory()
+    {
+        bool stillAnOpponent = false;
+        foreach (Character character in characters)
+        {
+            if (!character.getIsOwner())
+            {
+                stillAnOpponent= true;
+            }
+        }
+        if (!stillAnOpponent)
+        {
+            Debug.Log("Player " + ((turn % 2)+1) + " Wins");
+        }
+    }
+    public void updateStatDisplay(Character stat)
+    {
+        StatDisplaySprite.sprite=stat.GetComponent<SpriteRenderer>().sprite;
+        string name =stat.getName();
+        string health=""+stat.getHealth();
+        string atk=""+stat.getAtk();
+        string def = "" + stat.getDef();
+        string m = "" + stat.getmRange();
+        string ar = "" + stat.getaRange();
+        string acr = "" + stat.getactRange();
+        string ab=""+stat.getAction();
+        StatDisplay.text = "Name: " + name + "\r\nHealth: " + health + "\r\nAttack: " + atk + "\r\nDefense: " + def + "\r\nMovement Range: " + m + "\r\nAttack Range: " + ar + "\r\nAbillity Range: " + acr + "\r\nAbillity: " + ab;
+    }
+    public void updateCurrentDisplay(Character current)
+    {
+        if (current == null)
+        {
+            CurrentSprite.sprite = null;
+            currentDisplay.text = "Select a Character.";
+        }
+        else
+        {
+            CurrentSprite.sprite = current.GetComponent<SpriteRenderer>().sprite;
+            String state = "";
+            if (attack)
+            {
+                state = " to Attack.";
+            }
+            else if (move)
+            { state = " to Move."; }
+            else if (act)
+            { state = " to use its Power."; }
+            else { state = "."; }
+            currentDisplay.text = "" + current.getName() + " is ready" + state;
+        }
+    }
+    public void useAnAction()
+    {
+        actions--;
+        actionCount.text = "" + actions;
+    }
+    public void resetActionCount()
+    {
+        actions = 3;
+        actionCount.text=""+actions;
     }
     public void attackTrue()
     {
@@ -120,6 +197,10 @@ public class TestGrid : MonoBehaviour
         move = false;
         act = false;
         target=false;
+        updateCurrentDisplay(character);
+        pathFinding.getGrid().resetSprites();
+        pathFinding.getGrid().GetXY(character.getPosition(), out int x, out int y);
+        pathFinding.setPathSprite(character.getaRange() + 1, x, y, false);
     }
     public void moveTrue() 
     {
@@ -127,7 +208,11 @@ public class TestGrid : MonoBehaviour
         move = true;
         act = false;
         target=false;
-        Debug.Log("move");
+        updateCurrentDisplay(character);
+        pathFinding.getGrid().resetSprites();
+        pathFinding.getGrid().GetXY(character.getPosition(),out int x,out int y);
+        pathFinding.setPathSprite(character.getmRange()+1, x, y, true);
+        // Debug.Log("move");
     }
     public void actTrue() 
     {
@@ -135,6 +220,10 @@ public class TestGrid : MonoBehaviour
         move = false;
         act = true;
         target=false ;
+        updateCurrentDisplay(character);
+        pathFinding.getGrid().resetSprites();
+        pathFinding.getGrid().GetXY(character.getPosition(), out int x, out int y);
+        pathFinding.setPathSprite(character.getactRange()+1, x, y, false);
     }
     public void targetTrue()
     {
@@ -142,6 +231,7 @@ public class TestGrid : MonoBehaviour
         move = false;
         act = false;
         target=true ;
+        updateCurrentDisplay(character);
     }
     public void pass()
     {
@@ -149,16 +239,30 @@ public class TestGrid : MonoBehaviour
     }
     public void Update()
     {
-       /* if(Input.GetMouseButtonDown(1))
+        /* if(Input.GetMouseButtonDown(1))
+         {
+             Vector3 mouseWorldPosition = UtilsClass.GetMouseWorldPosition();
+             if (containsCharacter(mouseWorldPosition))
+             {
+                 changeTargetedCharacter(GetCharacter(mouseWorldPosition));
+                 Debug.Log("target");
+             }
+         }
+
+         else*/
+        
+        if(Input.GetMouseButtonDown(1))
         {
             Vector3 mouseWorldPosition = UtilsClass.GetMouseWorldPosition();
             if (containsCharacter(mouseWorldPosition))
             {
-                changeTargetedCharacter(GetCharacter(mouseWorldPosition));
-                Debug.Log("target");
+                updateStatDisplay(GetCharacter(mouseWorldPosition));
             }
         }
-        else*/ if (Input.GetMouseButtonDown(0))
+
+        
+
+        if (Input.GetMouseButtonDown(0))
         {
             
            // Debug.Log("good");
@@ -170,6 +274,7 @@ public class TestGrid : MonoBehaviour
             if (containsCharacter(mouseWorldPosition) && GetCharacter(mouseWorldPosition).getIsOwner()&&target)
             {
                 changeCharacter(GetCharacter(mouseWorldPosition));
+                pathFinding.getGrid().resetSprites();
             }
             else if (move && !containsCharacter(mouseWorldPosition) && !character.getMoved())
             {
@@ -177,7 +282,7 @@ public class TestGrid : MonoBehaviour
                 pathFinding.getGrid().GetXY(character.getPosition(), out int xStart, out int yStart);
 
                 // List<PathNode> path = pathFinding.FindPath(0, 0, xEnd, yEnd); 
-                List<PathNode> path = pathFinding.FindPath(xStart, yStart, xEnd, yEnd);
+                List<PathNode> path = pathFinding.FindPath(xStart, yStart, xEnd, yEnd, true);
                 //PathNode end= new PathNode(xEnd, yEnd);
                 //List<PathNode> path = pathFinding.calculatePath(end);
                 //int pathSize= pathFinding.FindPath(xStart, yStart, xEnd, yEnd);
@@ -213,11 +318,12 @@ public class TestGrid : MonoBehaviour
                        }
                    }*/
 
-                if (path.Count <= character.getmRange())
+                if (path.Count <= character.getmRange()+1&&pathFinding.checkIsWalkable(path))
                 {
                     character.SetPosition(pathFinding.getGrid().GetWorldPosition(xEnd, yEnd) + new Vector3(5, 5));
                     character.Moved();
-                    actions++;
+                    pathFinding.getGrid().resetSprites();
+                    useAnAction();
                 }
                 else
                 {
@@ -242,11 +348,13 @@ public class TestGrid : MonoBehaviour
                 {
                     targetedCharacter.takeDammage(character.getAtk());
                     character.attack();
-                    actions++;
+                    pathFinding.getGrid().resetSprites();
+                    useAnAction() ;
                     Debug.Log("HP: " + targetedCharacter.getHealth());
                     if(targetedCharacter.getHealth()<=0)
                     {
                         characters.Remove(targetedCharacter);
+                        checkForVictory();
                     }
                 }
                 else
@@ -266,10 +374,11 @@ public class TestGrid : MonoBehaviour
                     dis /= 10;
                     // Vector3 dis = (character.getPosition() - targetedCharacter.getPosition()).magnitude;
 
-                    if (dis <= character.getmRange())
+                    if (dis <= character.getactRange())
                     {
                         targetedCharacter=character.action(targetedCharacter);
-                        actions++;
+                        pathFinding.getGrid().resetSprites();
+                        useAnAction();
                         Debug.Log("HP: " + targetedCharacter.getHealth());
                         
                     }
@@ -279,24 +388,28 @@ public class TestGrid : MonoBehaviour
                     }
                 }
             }
-                // characterPathfinding.transform.position = pathFinding.getGrid().GetWorldPosition(x,y)+new Vector3(5,5);
+            // characterPathfinding.transform.position = pathFinding.getGrid().GetWorldPosition(x,y)+new Vector3(5,5);
 
 
-                //characterPathfinding.transform.position = mouseWorldPosition;
-                /*while(characterPathfinding.transform.position!=mouseWorldPosition)
-                {
-                    characterPathfinding.movementHandler();
-                }*/
-                //  characterPathfinding.movementHandler();
-                //  characterPathfinding.changePosition(mouseWorldPosition);
-                /*  for (int i = 1; i < path.Count - 1; i++)
-                  {
-                      //Debug.DrawLine(new Vector3(path[i].x, path[i].y) * 10f + Vector3.one * 5f, new Vector3(path[i + 1].x, path[i + 1].y) * 10f + Vector3.one * 5f, Color.green);
-                       characterPathfinding.movementHandler();
-                  }*/
-                //  Vector3 pos=pathFinding.getGrid().GetWorldPosition((int)mouseWorldPosition.x, (int)mouseWorldPosition.y);
-                //  characterPathfinding.transform.position = pos;
-                if (actions>=3)
+            //characterPathfinding.transform.position = mouseWorldPosition;
+            /*while(characterPathfinding.transform.position!=mouseWorldPosition)
+            {
+                characterPathfinding.movementHandler();
+            }*/
+            //  characterPathfinding.movementHandler();
+            //  characterPathfinding.changePosition(mouseWorldPosition);
+            /*  for (int i = 1; i < path.Count - 1; i++)
+              {
+                  //Debug.DrawLine(new Vector3(path[i].x, path[i].y) * 10f + Vector3.one * 5f, new Vector3(path[i + 1].x, path[i + 1].y) * 10f + Vector3.one * 5f, Color.green);
+                   characterPathfinding.movementHandler();
+              }*/
+            //  Vector3 pos=pathFinding.getGrid().GetWorldPosition((int)mouseWorldPosition.x, (int)mouseWorldPosition.y);
+            //  characterPathfinding.transform.position = pos;
+            if (containsCharacter(mouseWorldPosition))
+            {
+                updateStatDisplay(GetCharacter(mouseWorldPosition));
+            }
+            if (actions==0)
             {
                 changeTurn();
             }
