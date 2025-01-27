@@ -207,7 +207,19 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1212799444}
         m_TargetAssemblyTypeName: NextScene, Assembly-CSharp
-        m_MethodName: ToTeam1
+        m_MethodName: setTeamSelection
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1212799444}
+        m_TargetAssemblyTypeName: NextScene, Assembly-CSharp
+        m_MethodName: ToTeamSelection
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -421,7 +433,19 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1212799444}
         m_TargetAssemblyTypeName: NextScene, Assembly-CSharp
-        m_MethodName: ToTeam2
+        m_MethodName: setTeamSelection
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1212799444}
+        m_TargetAssemblyTypeName: NextScene, Assembly-CSharp
+        m_MethodName: ToTeamSelection
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -592,6 +616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b51f2aeb3f8d048993b875abf76fb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teamSelection: 0
 --- !u!1 &1500563855
 GameObject:
   m_ObjectHideFlags: 0

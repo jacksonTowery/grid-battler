@@ -274,6 +274,7 @@ MonoBehaviour:
   isSelected: 0
   owner: 0
   supporter: 1
+  charSprite: {fileID: 0}
 --- !u!1 &710867137
 GameObject:
   m_ObjectHideFlags: 0
@@ -1023,6 +1024,7 @@ MonoBehaviour:
   isSelected: 0
   owner: 0
   supporter: 1
+  charSprite: {fileID: 0}
 --- !u!114 &1280285027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1036,7 +1038,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yourChar: {fileID: 622226415}
-  charSprite: {fileID: 0}
   StatBlock: {fileID: 1036497560}
   Abilities: {fileID: 1280285028}
   charImage: {fileID: 1280285029}
@@ -1422,6 +1423,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2053695448}
+        m_TargetAssemblyTypeName: NextScene, Assembly-CSharp
+        m_MethodName: setTeamSelection
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1599247787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1656,7 +1669,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 732100944}
   m_HandleRect: {fileID: 732100942}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2235,6 +2248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b51f2aeb3f8d048993b875abf76fb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teamSelection: 0
 --- !u!4 &2053695449
 Transform:
   m_ObjectHideFlags: 0

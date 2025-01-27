@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class NextScene : MonoBehaviour
 {
+    public int teamSelection = 0;
+    //0 means no team
+    //1 means team 1
+    //2 means team 2
+
 
     public void ToTitle()
     {
@@ -16,13 +21,13 @@ public class NextScene : MonoBehaviour
         SceneManager.LoadScene("BattleScreen");
     }
 
-    public void ToTeam1()
+    public void setTeamSelection(int team)
     {
-        SceneManager.LoadScene("Team1Selection");
+        teamSelection = team;
     }
 
-    public void ToTeam2()
+    public void ToTeamSelection()
     {
-        SceneManager.LoadScene("Team2Selection");
+        SceneManager.LoadScene("Team" + teamSelection + "Selection");
     }
 }
