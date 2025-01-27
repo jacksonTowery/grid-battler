@@ -22,8 +22,8 @@ public class Character: MonoBehaviour
     public bool supporter=true;
     public Abillity ab=new Abillity();
     public string abType = "heal";
-    public string name = "Beta";
-   // public Sprite[] sprites=Resources.LoadAll("Spites",  typeof(Sprite)).Cast<Sprite>().ToArray();
+    public new string name = "Beta";
+    public Sprite mySprite = null;
 
     public int getmRange()
     {
@@ -173,8 +173,13 @@ public class Character: MonoBehaviour
     }
     public void setSprite(Sprite s)
     {
+        mySprite = s;
+        gameObject.GetComponent<SpriteRenderer>().sprite = mySprite;
+    }
 
-            gameObject.GetComponent<SpriteRenderer>().sprite = s;
+    public Sprite getSprite()
+    {
+        return mySprite;
     }
 
 

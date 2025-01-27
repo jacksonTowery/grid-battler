@@ -135,9 +135,13 @@ MonoBehaviour:
   def: 0
   mRange: 0
   aRange: 0
+  actRange: 0
   isSelected: 0
   owner: 0
   supporter: 1
+  abType: heal
+  name: Beta
+  mySprite: {fileID: 0}
 --- !u!1 &2332112346693383956
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +154,6 @@ GameObject:
   - component: {fileID: 1631235195008750739}
   - component: {fileID: 4431106307616450702}
   - component: {fileID: 2487648874871315381}
-  - component: {fileID: 9208850454244878852}
   m_Layer: 5
   m_Name: CharacterSelection
   m_TagString: Untagged
@@ -165,7 +168,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2332112346693383956}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -233,29 +236,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yourChar: {fileID: 8935219165398374856}
-  charSprite: {fileID: 0}
   StatBlock: {fileID: 5022670185137513568}
   Abilities: {fileID: 5231990929019629682}
   charImage: {fileID: 7018253930672983218}
---- !u!114 &9208850454244878852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2332112346693383956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84700e3b85f4d0b428066d7be8576d29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  atk: 0
-  def: 0
-  mRange: 0
-  aRange: 0
-  isSelected: 0
-  owner: 0
-  supporter: 1
 --- !u!1 &4587211208428498720
 GameObject:
   m_ObjectHideFlags: 0

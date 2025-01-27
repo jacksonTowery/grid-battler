@@ -15,7 +15,6 @@ public class Alien : Character
         setAbillity("lowerA");
         setName("Alien");
         setSupportType(false);
-        Sprite sprite = Resources.Load<Sprite>("Sprites/Alien");
-        setSprite(sprite);
+        setSprite(Resources.Load<Sprite>("Sprites/Alien"));
     }
 }

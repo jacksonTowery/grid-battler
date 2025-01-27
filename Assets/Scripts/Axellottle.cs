@@ -14,8 +14,6 @@ public class Axellottle : Character
         setactRange(4);
         setAbillity("heal");
         setName("Axellotle");
-        Sprite sprite = Resources.Load<Sprite>("Sprites/Squishy");
-        setSprite(sprite);
+        setSprite(Resources.Load<Sprite>("Sprites/Squishy"));
     }
-
 }
