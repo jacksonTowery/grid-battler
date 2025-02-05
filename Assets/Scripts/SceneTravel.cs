@@ -36,7 +36,6 @@ public class SceneTravel : MonoBehaviour
     //sends you to teams
     public void ToTeam(int num)
     {
-        Debug.Log("made it" + num);
         if (num == 1 || num == 2)
         {
             Singleton.Instance.setTeam(num);

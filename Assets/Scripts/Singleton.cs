@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,9 +9,9 @@ public class Singleton : MonoBehaviour
 {
     public static Singleton Instance { get; private set; }
 
-    public Character[] Party1 = new Character[3];
-    public Character[] Party2 = new Character[3];
-    public static Character[] tempParty = new Character[3];
+    public Character[] Party1 = null;
+    public Character[] Party2 = null;
+    public static Character[] tempParty = null;
     public int currentTeam = 0;
     
     private void Awake()
@@ -30,6 +32,11 @@ public class Singleton : MonoBehaviour
     public void updateParty(Character[] newparty)
     {
         newparty = tempParty;
+    }
+
+    public void updateParty()
+    {
+        updateParty(getTeam());
     }
 
     public Character[] getTempParty()
@@ -64,19 +71,24 @@ public class Singleton : MonoBehaviour
             return null;
     }
 
+    public Character[] getTeam()
+    {
+        return getTeam(getTeamNumber());
+    }
+
     public void setTeam(int num)
     {
         currentTeam = num;
 
         setTempParty(getTeam(num));
-
-        Debug.Log("it is now team " + currentTeam + "'s time to shine.");
     }
 
     //using slot-1 format again for simplicity
-    public void updateSlot(Character[] team, int slot, Character chara)
+    public void updateSlot(int slot, Character chara)
     {
-        team[slot - 1] = chara;
+
+        tempParty[slot - 1] = chara;
+        GameObject.Find("Slot" + slot).GetComponentInChildren<SpriteRenderer>().sprite = chara.getSprite();
     }
 
 }
