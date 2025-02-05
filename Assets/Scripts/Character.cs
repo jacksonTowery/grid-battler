@@ -93,7 +93,6 @@ public class Character: MonoBehaviour
     {
         supporter= b;
     }
-
     public void Moved()
     {
         moved = true;
@@ -174,37 +173,14 @@ public class Character: MonoBehaviour
     public void setSprite(Sprite s)
     {
         mySprite = s;
-        gameObject.GetComponent<SpriteRenderer>().sprite = mySprite;
+        if (gameObject.GetComponent<SpriteRenderer>() != null)
+        {
+            gameObject.GetComponent<SpriteRenderer>().sprite = mySprite;
+        }
     }
 
     public Sprite getSprite()
     {
         return mySprite;
     }
-
-
-    /*private void OnMouseDown()
-    {
-        if (newSelection==null)
-        {
-            newSelection = Instantiate(selectionPrefab, transform.position,Quaternion.identity);
-            newSelection.transform.SetParent(gameObject.transform);
-            newSelection.SetActive(false);
-        }
-
-        isSelected=!isSelected;
-
-        if(isSelected)
-        {
-            newSelection.SetActive(true);
-        }
-        else
-        {
-            newSelection.SetActive(false);
-        }
-    }*/
-
-
-
-
 }

@@ -41,16 +41,32 @@ public class TestGrid : MonoBehaviour
         Debug.Log(spriteD);
         //  Grid<bool> grid = new Grid<bool>(11, 11, 10f, new Vector3(20,0), ()=> new bool());
         pathFinding = new PathFinding(11, 11, spriteP,spriteD);
-         characters = new List<Character>();
+
+        characterA = Singleton.Instance.getTeam(1)[0];
+        characterB = Singleton.Instance.getTeam(1)[1];
+        characterC = Singleton.Instance.getTeam(1)[2];
+
+        characterD = Singleton.Instance.getTeam(2)[0];
+        characterE = Singleton.Instance.getTeam(2)[1];
+        characterF = Singleton.Instance.getTeam(2)[2];
+
+
+
+        characters = new List<Character>();
          characters.Add(characterA);
          characters.Add(characterB);
          characters.Add(characterC);
          characters.Add(characterD);
          characters.Add(characterE);
          characters.Add(characterF);
-        //changeCharacter(characterA);
-        //changeTargetedCharacter(characterE);
-        
+
+        for (int i = 0; i < 5; i++)
+        {
+            if (characters[i] == null)
+            {
+                characters[i] = new Human();
+            }
+        }
     }
     public void changeCharacter(Character character)
     {
