@@ -19,11 +19,16 @@ public class Character: MonoBehaviour
     private bool usedAbillity = false;
     public bool isSelected;
     public bool owner;
-    public bool supporter=true;
+    public bool supporter = false;
     public Abillity ab=new Abillity();
     public string abType = "heal";
-    public new string name = "Beta";
+    public string customName = "Beta";
     public Sprite mySprite = null;
+
+    public Character()
+    {
+
+    }
 
     public int getmRange()
     {
@@ -79,7 +84,7 @@ public class Character: MonoBehaviour
     }
     public string getName()
     {
-        return name;
+        return customName;
     }
     public void setName(string a)
     {
@@ -121,13 +126,10 @@ public class Character: MonoBehaviour
     {
         return owner;
     }
-
     public Vector3 getPosition()
     {
         return transform.position;
     }
-    
-
     public void SetPosition(Vector3 pos)
     {
         transform.position = pos;
@@ -178,7 +180,6 @@ public class Character: MonoBehaviour
             gameObject.GetComponent<SpriteRenderer>().sprite = mySprite;
         }
     }
-
     public Sprite getSprite()
     {
         return mySprite;

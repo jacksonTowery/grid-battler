@@ -11,7 +11,7 @@ public class Singleton : MonoBehaviour
 
     public Character[] Party1 = null;
     public Character[] Party2 = null;
-    public static Character[] tempParty = null;
+    public static Character[] tempParty = new Character[3];
     public int currentTeam = 0;
     
     private void Awake()
@@ -84,11 +84,35 @@ public class Singleton : MonoBehaviour
     }
 
     //using slot-1 format again for simplicity
+    //this method should only ever be called in regards to the slot buttons, so adding image update functionality to this as well
     public void updateSlot(int slot, Character chara)
     {
+        Debug.Log("Arrived in singleton..");
 
-        tempParty[slot - 1] = chara;
-        GameObject.Find("Slot" + slot).GetComponentInChildren<SpriteRenderer>().sprite = chara.getSprite();
+        Character[] newTempParty = getTempParty();
+        Debug.Log("successfully established newtempparty");
+
+        //if statement (hopefully) prevents from setting something to something it already is, helping runtime to be faster
+        if (tempParty[slot - 1] != chara)
+        {
+            Debug.Log("tempparty != chara");
+            newTempParty[slot - 1] = chara;
+        }
+
+        if (chara != null && chara.getSprite() != null)
+        {
+            Debug.Log("chara!=null and sprite!=null");
+            GameObject.Find("Slot" + slot).GetComponentInChildren<UnityEngine.UI.Image>().sprite = chara.getSprite();
+            Debug.Log("sprite successfully found and set");
+        }
+        else
+        {
+            Debug.Log("Nothing flagged right, sprite is set to question mark");
+            GameObject.Find("Slot" + slot).GetComponentInChildren<UnityEngine.UI.Image>().sprite = Resources.Load<Sprite>("Sprites/Question");
+        }
+
+        Debug.Log("set new party");
+        setTempParty(newTempParty);
     }
 
 }

@@ -21,5 +21,7 @@ public class PopulateData : MonoBehaviour
 
         //Right now will need to manually fill out description. Maybe in future attach description to the character object?
         Abilities.text = yourChar.getName() + "\r\n" + yourChar.getAction();
+
+
     }
 }

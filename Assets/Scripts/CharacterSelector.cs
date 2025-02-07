@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using UnityEditor.Search;
 using UnityEngine;
 
 public class CharacterSelector : MonoBehaviour
 {
-    private Character selectedCharacter;
+    private readonly Character tempChar;
+    private Character selectedCharacter = null;
     private Character[] personalParty = new Character[3];
     private void Start()
     {
@@ -12,35 +15,45 @@ public class CharacterSelector : MonoBehaviour
         {
             for (int i = 0; i < personalParty.Length; i++)
             {
-                personalParty[i] = new Character();
+                personalParty[i] = tempChar;
             }
         }
         else
         {
-            personalParty = Singleton.Instance.getTeam();
+            for (int i = 0; i < Singleton.Instance.getTeam().Length; i++)
+            {
+                if (Singleton.Instance.getTeam()[i] == null)
+                {
+                    selectedCharacter = tempChar;
+                    callUpdateSlot(i + 1);
+                }
+                else
+                {
+                    personalParty[i] = Singleton.Instance.getTeam()[i];
+                }
+            }
         }
+        
+        for(int i = 1; i<=3; i++)
+        {
+            Singleton.Instance.updateSlot(i, Singleton.Instance.getTeam()[i-1]);
+        }
+
+        //cleanse useless game object
+        Destroy(tempChar);
     }
 
     public void updateSelectedCharacter(Character chara)
     {
-        selectedCharacter = chara;
-    }
-
-    public void sendParty()
-    {
-        string temp = ("Team: ");
-        foreach (Character chara in Singleton.Instance.getTeam(Singleton.Instance.getTeamNumber()))
+        if (chara != null)
         {
-            temp += chara.getName() + ", ";
+            selectedCharacter = chara;
         }
-        Debug.Log(temp);
-
-        Singleton.Instance.setTempParty(personalParty);
     }
 
     public void callUpdateSlot(int slotNumber)
     {
-        Debug.Log(slotNumber + "; calling singleton method...");
+        Debug.Log("calling singleton..");
         Singleton.Instance.updateSlot(slotNumber, selectedCharacter);
     }
 }

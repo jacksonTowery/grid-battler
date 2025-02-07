@@ -11,13 +11,9 @@ public class SceneTravel : MonoBehaviour
     {
         SceneManager.LoadScene("TitleScreen");
 
-        if (Singleton.Instance.getTeamNumber() == 1)
+        if (Singleton.Instance.getTeamNumber() == 1 || Singleton.Instance.getTeamNumber() == 2)
         {
-            Singleton.Instance.updateParty(Singleton.Instance.Party1, Singleton.Instance.getTempParty());
-        }
-        else if (Singleton.Instance.getTeamNumber() == 2)
-        {
-            Singleton.Instance.updateParty(Singleton.Instance.Party2, Singleton.Instance.getTempParty());
+            Singleton.Instance.updateParty();
         }
         else
         {
