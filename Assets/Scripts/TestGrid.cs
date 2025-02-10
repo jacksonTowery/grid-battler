@@ -38,7 +38,7 @@ public class TestGrid : MonoBehaviour
     {
         Sprite spriteP = Resources.Load<Sprite>("Sprites/Selectable_Tile");
         Sprite spriteD = Resources.Load<Sprite>("Sprites/Tile");
-        Debug.Log(spriteD);
+       // Debug.Log(spriteD);
         //  Grid<bool> grid = new Grid<bool>(11, 11, 10f, new Vector3(20,0), ()=> new bool());
         pathFinding = new PathFinding(11, 11, spriteP,spriteD);
          characters = new List<Character>();
@@ -142,7 +142,7 @@ public class TestGrid : MonoBehaviour
         }
         if (!stillAnOpponent)
         {
-            Debug.Log("Player " + ((turn % 2)+1) + " Wins");
+          //  Debug.Log("Player " + ((turn % 2)+1) + " Wins");
         }
     }
     public void updateStatDisplay(Character stat)
@@ -197,10 +197,13 @@ public class TestGrid : MonoBehaviour
         move = false;
         act = false;
         target=false;
-        updateCurrentDisplay(character);
-        pathFinding.getGrid().resetSprites();
-        pathFinding.getGrid().GetXY(character.getPosition(), out int x, out int y);
-        pathFinding.setPathSprite(character.getaRange() + 1, x, y, false);
+        if (character != null)
+        {
+            updateCurrentDisplay(character);
+            pathFinding.getGrid().resetSprites();
+            pathFinding.getGrid().GetXY(character.getPosition(), out int x, out int y);
+            pathFinding.setPathSprite(character.getaRange() + 1, x, y, false);
+        }
     }
     public void moveTrue() 
     {
@@ -208,10 +211,13 @@ public class TestGrid : MonoBehaviour
         move = true;
         act = false;
         target=false;
-        updateCurrentDisplay(character);
-        pathFinding.getGrid().resetSprites();
-        pathFinding.getGrid().GetXY(character.getPosition(),out int x,out int y);
-        pathFinding.setPathSprite(character.getmRange()+1, x, y, true);
+        if (character != null)
+        {
+            updateCurrentDisplay(character);
+            pathFinding.getGrid().resetSprites();
+            pathFinding.getGrid().GetXY(character.getPosition(), out int x, out int y);
+            pathFinding.setPathSprite(character.getmRange() + 1, x, y, true);
+        }
         // Debug.Log("move");
     }
     public void actTrue() 
@@ -220,10 +226,13 @@ public class TestGrid : MonoBehaviour
         move = false;
         act = true;
         target=false ;
-        updateCurrentDisplay(character);
-        pathFinding.getGrid().resetSprites();
-        pathFinding.getGrid().GetXY(character.getPosition(), out int x, out int y);
-        pathFinding.setPathSprite(character.getactRange()+1, x, y, false);
+        if (character != null)
+        {
+            updateCurrentDisplay(character);
+            pathFinding.getGrid().resetSprites();
+            pathFinding.getGrid().GetXY(character.getPosition(), out int x, out int y);
+            pathFinding.setPathSprite(character.getactRange() + 1, x, y, false);
+        }
     }
     public void targetTrue()
     {
@@ -231,7 +240,10 @@ public class TestGrid : MonoBehaviour
         move = false;
         act = false;
         target=true ;
-        updateCurrentDisplay(character);
+        if (character != null)
+        {
+            updateCurrentDisplay(character);
+        }
     }
     public void pass()
     {
@@ -276,7 +288,7 @@ public class TestGrid : MonoBehaviour
                 changeCharacter(GetCharacter(mouseWorldPosition));
                 pathFinding.getGrid().resetSprites();
             }
-            else if (move && !containsCharacter(mouseWorldPosition) && !character.getMoved())
+            else if (move && !containsCharacter(mouseWorldPosition) && character != null && !character.getMoved())
             {
                 pathFinding.getGrid().GetXY(mouseWorldPosition, out int xEnd, out int yEnd);
                 pathFinding.getGrid().GetXY(character.getPosition(), out int xStart, out int yStart);
@@ -327,10 +339,10 @@ public class TestGrid : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Out of Range ");
+                    //Debug.Log("Out of Range ");
                 }
             }
-            else if (attack && containsCharacter(mouseWorldPosition)&&!GetCharacter(mouseWorldPosition).getIsOwner() && !character.getAttack())
+            else if (attack && containsCharacter(mouseWorldPosition)&&!GetCharacter(mouseWorldPosition).getIsOwner() && character != null && !character.getAttack())
             {
                changeTargetedCharacter(GetCharacter(mouseWorldPosition));
 
@@ -350,7 +362,7 @@ public class TestGrid : MonoBehaviour
                     character.attack();
                     pathFinding.getGrid().resetSprites();
                     useAnAction() ;
-                    Debug.Log("HP: " + targetedCharacter.getHealth());
+                   // Debug.Log("HP: " + targetedCharacter.getHealth());
                     if(targetedCharacter.getHealth()<=0)
                     {
                         characters.Remove(targetedCharacter);
@@ -359,11 +371,11 @@ public class TestGrid : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Out of Range: "+dis);
+                   // Debug.Log("Out of Range: "+dis);
                 }
 
             }
-            else if (act && containsCharacter(mouseWorldPosition)&&!character.getAct())
+            else if (act && containsCharacter(mouseWorldPosition)&& character != null&&!character.getAct())
             {
                 changeTargetedCharacter(GetCharacter(mouseWorldPosition));
                 if (targetedCharacter.getIsOwner() == character.getActType()) 
@@ -379,12 +391,12 @@ public class TestGrid : MonoBehaviour
                         targetedCharacter=character.action(targetedCharacter);
                         pathFinding.getGrid().resetSprites();
                         useAnAction();
-                        Debug.Log("HP: " + targetedCharacter.getHealth());
+                        //Debug.Log("HP: " + targetedCharacter.getHealth());
                         
                     }
                     else
                     {
-                        Debug.Log("Out of Range: " + dis);
+                       // Debug.Log("Out of Range: " + dis);
                     }
                 }
             }

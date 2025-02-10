@@ -43,12 +43,12 @@ public class Grid<TGridObject>
                  spriteArray[x,y]=CreateWorldSprite(null, GetWorldPosition(x,y)+new Vector3(cellsize,cellsize)*.5f, defaultSprite);
                // debugArray[x, y].GetComponent<SpriteRenderer>().sprite = defaultSprite;
 
-                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
-                 Debug.DrawLine(GetWorldPosition(x+1, y), GetWorldPosition(x, y), Color.white, 100f);
+               // Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
+               //  Debug.DrawLine(GetWorldPosition(x+1, y), GetWorldPosition(x, y), Color.white, 100f);
             }
         }
-        Debug.DrawLine(GetWorldPosition(0,height), GetWorldPosition(width,height), Color.white, 100f);
-        Debug.DrawLine(GetWorldPosition(width,0), GetWorldPosition(width,height), Color.white, 100f);
+       // Debug.DrawLine(GetWorldPosition(0,height), GetWorldPosition(width,height), Color.white, 100f);
+       // Debug.DrawLine(GetWorldPosition(width,0), GetWorldPosition(width,height), Color.white, 100f);
 
 
     }
